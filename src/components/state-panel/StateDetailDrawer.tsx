@@ -9,7 +9,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Calendar, MapPin, Notebook, CheckCircle2 } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { formatMonthYear } from "@/lib/utils";
+import { formatMonthYear, formatDate } from "@/lib/utils";
 
 interface StateDetailDrawerProps {
   state: StateVisitData | null;
@@ -37,7 +37,9 @@ export function StateDetailDrawer({ state, onClose }: StateDetailDrawerProps) {
           {state.visitMonthYear && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Calendar className="w-4 h-4" />
-              <span>Visited in {formatMonthYear(state.visitMonthYear)}</span>
+              <span>
+                First visited in {formatMonthYear(state.visitMonthYear)}
+              </span>
             </div>
           )}
         </SheetHeader>
@@ -57,7 +59,14 @@ export function StateDetailDrawer({ state, onClose }: StateDetailDrawerProps) {
                         key={city.name}
                         className="flex items-center justify-between p-3 rounded-xl bg-muted/50 border border-border/50"
                       >
-                        <span className="font-medium">{city.name}</span>
+                        <div className="flex flex-col">
+                          <span className="font-medium">{city.name}</span>
+                          {city.date && (
+                            <span className="text-xs text-muted-foreground">
+                              {formatDate(city.date)}
+                            </span>
+                          )}
+                        </div>
                         <CheckCircle2 className="w-4 h-4 text-accent" />
                       </div>
                     ))}
